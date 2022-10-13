@@ -1,0 +1,39 @@
+version: '3.7'
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge
+
+
+services:
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:19.0.3
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: $DB_DATABASE
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      KEYCLOAK_USER: $KEYCLOAK_USER
+      KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
+      KEYCLOAK_ADMIN: $KEYCLOAK_ADMIN
+      KEYCLOAK_ADMIN_PASSWORD: $KEYCLOAK_ADMIN_PASSWORD
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+    command: start-dev
