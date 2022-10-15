@@ -4,7 +4,7 @@ const keycloak = new Keycloak({
   url: "http://localhost:8080",
   realm: "insaas",
   clientId: "customer-portal",
-  clientSecret: "Zx8dZZK76Q9wuP74Dke8EcrRMmeoy01P",
+  clientSecret: "EN76BmhAMpkguDFtDhoNe1ZzRjQ6rP7A",
 });
 
 export default keycloak;
