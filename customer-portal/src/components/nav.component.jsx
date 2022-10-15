@@ -24,30 +24,29 @@ const Nav = () => {
                    Secured Page
                  </a>
                </li>
-             </ul>
-             <div className="hidden xl:flex items-center space-x-5">
-               <div className="hover:text-gray-200">
-                 {!keycloak.authenticated && (
-                   <button
+               {!keycloak.authenticated && (
+                    <li><button
                      type="button"
                      className="text-blue-800"
                      onClick={() => keycloak.login()}
                    >
                      Login
                    </button>
+                   </li>
                  )}
 
                  {!!keycloak.authenticated && (
-                   <button
+                   <li><button
                      type="button"
                      className="text-blue-800"
                      onClick={() => keycloak.logout()}
                    >
                      Logout ({keycloak.tokenParsed.preferred_username})
                    </button>
+                   </li>
                  )}
-               </div>
-             </div>
+             </ul>
+
            </div>
          </nav>
        </section>

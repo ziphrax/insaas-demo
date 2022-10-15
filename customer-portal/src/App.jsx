@@ -8,9 +8,17 @@ import SecuredPage from "./pages/securedpage.page";
 import PrivateRoute from "./helpers/private-route.helpers";
 
 function App() {
+
  return (
    <div>
-     <ReactKeycloakProvider authClient={keycloak}>
+     <ReactKeycloakProvider authClient={keycloak} initOptions={{
+      onLoad:'check-sso', 
+      onEvent: (event, error) => {
+        console.log('onKeycloakEvent', event, error)
+      },
+      onTokens: (tokens) => {
+        console.log('onTokens', tokens);
+      }}}>
        <Nav />
        <BrowserRouter>
          <Routes>
