@@ -3,6 +3,8 @@ version: '3.7'
 volumes:
   mysql_data:
     driver: local
+  keycloak-data-volume:
+    driver: local
 
 networks:
   default:
@@ -12,6 +14,7 @@ networks:
 services:
   mysql:
     image: mysql:5.7
+    restart: always
     volumes:
       - mysql_data:/var/lib/mysql
     environment:
@@ -22,6 +25,7 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:19.0.3
+    restart: always
     environment:
       DB_VENDOR: MYSQL
       DB_ADDR: mysql
@@ -32,6 +36,8 @@ services:
       KEYCLOAK_PASSWORD: $KEYCLOAK_PASSWORD
       KEYCLOAK_ADMIN: $KEYCLOAK_ADMIN
       KEYCLOAK_ADMIN_PASSWORD: $KEYCLOAK_ADMIN_PASSWORD
+    volumes:
+    - keycloak-data-volume:/var/lib/keycloak/data
     ports:
       - 8080:8080
     depends_on:
